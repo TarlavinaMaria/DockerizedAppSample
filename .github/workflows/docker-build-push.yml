@@ -30,6 +30,9 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
 
+    - name: Pull Docker image
+      run: docker pull ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
+
     - name: Verify Docker image
       run: |
         docker images

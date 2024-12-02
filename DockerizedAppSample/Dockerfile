@@ -16,11 +16,10 @@ RUN dotnet build "DockerizedAppSample.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "DockerizedAppSample.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Финальный этап с применением миграций
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS final
+# Финальный этап
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /src /src
 
 # Установка dotnet-ef
 RUN dotnet tool install --global dotnet-ef && \

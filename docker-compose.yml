@@ -1,10 +1,9 @@
+version: '3.8'
+
 services:
   app:
-    image: dockerrizedappsample
+    image: ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
     container_name: dockerrizedappsample_app
-    build:
-      context: .
-      dockerfile: DockerizedAppSample/Dockerfile
     ports:
       - 8080:8080
     depends_on:

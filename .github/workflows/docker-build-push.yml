@@ -33,7 +33,22 @@ jobs:
     - name: Pull Docker image
       run: docker pull ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
 
-    - name: Verify Docker image
+    - name: Run Docker container
+      run: docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
+
+    - name: Set up ngrok
       run: |
-        docker images
-        docker history ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
+        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+        unzip ngrok-stable-linux-amd64.zip
+        ./ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+        ./ngrok http 8080 &
+
+    - name: Wait for ngrok to start
+      run: sleep 10
+
+    - name: Get ngrok URL
+      id: ngrok
+      run: echo "::set-output name=url::$(curl -s http://localhost:4040/api/tunnels | jq -r .tunnels[0].public_url)"
+
+    - name: Output ngrok URL
+      run: echo "Ngrok URL: ${{ steps.ngrok.outputs.url }}"

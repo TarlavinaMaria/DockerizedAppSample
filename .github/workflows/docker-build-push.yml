@@ -34,7 +34,3 @@ jobs:
       run: |
         docker images
         docker history ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
-
-    - name: Run Docker Compose
-      run: |
-        docker-compose up -d

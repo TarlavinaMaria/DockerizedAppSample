@@ -27,4 +27,4 @@ RUN dotnet tool install --global dotnet-ef && \
     export PATH="$PATH:/root/.dotnet/tools"
 
 # Применение миграций и запуск приложения
-ENTRYPOINT ["sh", "-c", "export PATH=$PATH:/root/.dotnet/tools && dotnet ef database update --project /src/DockerizedAppSample/DockerizedAppSample.csproj && dotnet DockerizedAppSample.dll"]
+ENTRYPOINT ["sh", "-c", "sleep 10 && export PATH=$PATH:/root/.dotnet/tools && dotnet ef database update --project /src/DockerizedAppSample/DockerizedAppSample.csproj && dotnet DockerizedAppSample.dll"]

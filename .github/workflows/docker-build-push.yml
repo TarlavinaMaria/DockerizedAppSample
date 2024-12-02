@@ -30,7 +30,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest
 
-    - name: Analyze Docker image size
+    - name: Verify Docker image
       run: |
         docker images
         docker history ${{ secrets.DOCKER_USERNAME }}/dockerrizedappsample:latest

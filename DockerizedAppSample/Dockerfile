@@ -1,10 +1,10 @@
 # Этап для среды выполнения
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
 # Этап сборки
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["DockerizedAppSample/DockerizedAppSample.csproj", "DockerizedAppSample/"]
 RUN dotnet restore "DockerizedAppSample/DockerizedAppSample.csproj"
@@ -17,7 +17,7 @@ FROM build AS publish
 RUN dotnet publish "DockerizedAppSample.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Финальный этап с применением миграций
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS final
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build /src /src
